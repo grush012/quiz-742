@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Викторина гуля · 7.42 · Tokyo Ghoul edition</title>
+  <meta name="description" content="Фанатская викторина по патчу Dota 2 7.42 в эстетике Tokyo Ghoul: 12 вопросов с пояснениями.">
+  <link rel="stylesheet" href="style.css">
+  <script src="quiz.js" defer></script>
+</head>
+<body>
+  <div class="halftone" aria-hidden="true"></div>
+  <div class="glow glow-a" aria-hidden="true"></div>
+  <div class="glow glow-b" aria-hidden="true"></div>
+
+  <!-- ── Фон: видео с котом и маска гуля ─────────────────── -->
+  <div class="stage" aria-hidden="true">
+    <div class="spot spot-l"></div>
+    <div class="spot spot-r"></div>
+
+    <figure class="portrait portrait--1">
+      <img src="assets/kaneki-red.png" alt="">
+    </figure>
+    <figure class="portrait portrait--2">
+      <img src="assets/kaneki-blood.png" alt="">
+    </figure>
+    <figure class="portrait portrait--3">
+      <img src="assets/kaneki-bandage.png" alt="">
+    </figure>
+
+    <span class="kanji-side">東京喰種</span>
+
+    <div class="cat-video">
+      <video class="cat-video-media" autoplay muted loop playsinline preload="auto">
+        <source src="assets/kitten-ghoul.mp4" type="video/mp4">
+      </video>
+      <span class="cat-video-live">zxcursed</span>
+    </div>
+  </div>
+
+  <div id="embers" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <svg class="eye" viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="22.5" fill="#0a0a0c" stroke="rgba(215,38,61,.5)"/>
+          <circle cx="24" cy="24" r="15" fill="none" stroke="#b3121f" stroke-width="1.2" opacity=".7"/>
+          <circle cx="24" cy="24" r="10" fill="#d7263d" opacity=".18"/>
+          <circle cx="24" cy="24" r="5.4" fill="#e8273f"/>
+          <circle cx="24" cy="24" r="2.1" fill="#120305"/>
+          <circle cx="19.4" cy="19.2" r="2.4" fill="#ffa8b1" opacity=".65"/>
+        </svg>
+        <span class="brand-text">ПАТЧ <b>7.42</b><small>喰種 edition</small></span>
+      </div>
+
+      <div class="hud">
+        <div class="hud-cell">
+          <span>Вопрос</span>
+          <b><span id="q-num">1</span><i>/</i><span id="q-total">12</span></b>
+        </div>
+        <div class="hud-cell">
+          <span>Счёт</span>
+          <b id="hud-score">0</b>
+        </div>
+        <div class="hud-cell">
+          <span>Серия</span>
+          <b id="hud-streak">0</b>
+        </div>
+        <button id="btn-sound" class="icon-btn" type="button" aria-pressed="true" aria-label="Выключить звук">♪</button>
+      </div>
+    </header>
+
+    <!-- ── Старт ─────────────────────────────────────────── -->
+    <section class="screen is-active" id="screen-start">
+      <div class="grimoire">
+        <p class="kicker">東京喰種 · Dota 2 · патч 7.42 · ноябрь 2026</p>
+        <h1 class="title" data-text="Викторина гуля">Викторина<br><span>гуля</span></h1>
+        <p class="sub">
+          В 7.42 Valve вскрыла могилу и вытащила оттуда новых нейтралов, предметы
+          и целую механику. Проверь, кто читал патчноут, а кто просто гулит у фонтана.
+        </p>
+
+        <ul class="rules">
+          <li><b>12</b> вопросов по 7.42</li>
+          <li><b>20</b> секунд на ответ</li>
+          <li>Серия держит тебя в форме</li>
+        </ul>
+
+        <button class="btn btn-primary" id="btn-start" type="button">Вылезти из могилы</button>
+
+        <p class="best">Лучший результат: <b id="best-score">—</b></p>
+      </div>
+    </section>
+
+    <!-- ── Вопрос ────────────────────────────────────────── -->
+    <section class="screen" id="screen-quiz" aria-live="polite">
+      <div class="q-top">
+        <span class="topic" id="topic">Механики</span>
+        <div class="timer" id="timer" role="timer" aria-label="Время на ответ">
+          <span class="timer-fill" id="timer-fill"></span>
+          <span class="timer-num" id="timer-num">20</span>
+        </div>
+      </div>
+
+      <div class="bar" aria-hidden="true"><span id="bar-fill"></span></div>
+
+      <article class="card">
+        <h2 class="question" id="question">Загрузка...</h2>
+
+        <div class="answers" id="answers"></div>
+
+        <div class="feedback" id="feedback" hidden>
+          <p class="verdict" id="verdict"></p>
+          <p class="explain" id="explain"></p>
+          <button class="btn btn-primary btn-next" id="btn-next" type="button">Дальше</button>
+        </div>
+      </article>
+    </section>
+
+    <!-- ── Финал ─────────────────────────────────────────── -->
+    <section class="screen" id="screen-result">
+      <div class="grimoire grimoire-result">
+        <p class="kicker">Ритуал завершён</p>
+        <p class="score-line"><b id="final-score">0</b><span>/ <span id="final-total">12</span></span></p>
+        <h1 class="rank" id="rank">Свежий труп</h1>
+        <p class="sub" id="rank-text"></p>
+        <p class="streak-line">Лучшая серия: <b id="final-streak">0</b></p>
+
+        <div class="result-actions">
+          <button class="btn btn-primary" id="btn-restart" type="button">Заново</button>
+          <button class="btn btn-ghost" id="btn-home" type="button">В склеп</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      Неофициальная фанатская викторина · Dota 2 — торговая марка Valve · Tokyo Ghoul — Суй Исида
+    </footer>
+  </main>
+</body>
+</html>
